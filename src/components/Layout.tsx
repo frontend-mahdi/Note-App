@@ -1,4 +1,3 @@
-import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { FC, ReactNode } from "react";
@@ -10,12 +9,8 @@ export interface LayoutType {
 const Layout: FC<LayoutType> = ({ children }) => {
   const router = useRouter();
   const redirectLink = router.pathname !== "/newNote" ? "/newNote" : "/";
-  const title = router.pathname === "/newNote" ? "new note" : "notes";
   return (
     <>
-      <Head>
-        <title>{"Note App" + " | " + title}</title>
-      </Head>
       <div className="py-6">
         {children}
         <Link href={redirectLink}>
