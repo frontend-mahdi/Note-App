@@ -2,10 +2,10 @@ import { FC } from "react";
 
 export interface NoteType {
   title: string;
-  description: string;
+  description?: string;
 }
 
-const Note: FC<NoteType> = ({ title, description }) => {
+const Note: FC<NoteType> = ({ title, description = "" }) => {
   return (
     <div className="border-white bg-gray-900 border-b px-4 py-2 w-full mb-6">
       <h4 className="capitalize">{title}</h4>
