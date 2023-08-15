@@ -10,11 +10,11 @@ export interface LayoutType {
 const Layout: FC<LayoutType> = ({ children }) => {
   const router = useRouter();
   const redirectLink = router.pathname !== "/newNote" ? "/newNote" : "/";
-  const title = router.pathname === "/newNote" ? "New Note" : "Note App";
+  const title = router.pathname === "/newNote" ? "new note" : "notes";
   return (
     <>
       <Head>
-        <title>{title}</title>
+        <title>{"Note App" + " | " + title}</title>
       </Head>
       <div className="py-6">
         {children}
@@ -23,10 +23,11 @@ const Layout: FC<LayoutType> = ({ children }) => {
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
+              color="#fff"
               viewBox="0 0 24 24"
-              strokeWidth={1.5}
+              strokeWidth={2}
               stroke="currentColor"
-              className={`w-6 h-6 transition-transform ${
+              className={`w-5 h-5 transition-transform ${
                 redirectLink !== "/newNote" && "-rotate-45"
               }`}
             >
@@ -36,6 +37,11 @@ const Layout: FC<LayoutType> = ({ children }) => {
                 d="M12 4.5v15m7.5-7.5h-15"
               />
             </svg>
+          </div>
+        </Link>
+        <Link href={"/"}>
+          <div className="fixed bottom-4 left-4 bg-gray-800 hover:bg-gray-700 p-4 rounded-xl text-sm cursor-pointer">
+            Enable Notification
           </div>
         </Link>
       </div>
