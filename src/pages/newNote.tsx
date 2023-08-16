@@ -1,6 +1,6 @@
 import useIdb from "@/hooks/Idb";
 import { useRouter } from "next/router";
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import { useForm } from "react-hook-form";
 
 export interface NewNoteType {}
@@ -10,9 +10,22 @@ const NewNote: FC<NewNoteType> = () => {
     title: string;
     description: string;
   };
-  const { handleSubmit, register } = useForm<FormInputsType>();
-  const { writeNote } = useIdb();
+  const { handleSubmit, register, reset } = useForm<FormInputsType>();
+  const { writeNote, getNote, db } = useIdb();
   const router = useRouter();
+  useEffect(() => {
+    const query = router.query;
+    let id;
+    if ("edit" in query) {
+      id = query.edit;
+      if (!!id) {
+        if (db)
+          getNote(id as string)?.then((data) => {
+            reset(data);
+          });
+      }
+    }
+  }, [router.pathname, db]);
   const submitFormHandler = (data: FormInputsType) => {
     console.log("submitted data is", data);
     const _data = {

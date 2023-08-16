@@ -39,7 +39,29 @@ const useIdb = () => {
       });
     return result;
   };
-  return { writeNote, readAllNotes, db };
+  const deleteNote = (id: NoteType["id"]) => {
+    if (db)
+      db.then((db) => {
+        const tx = db
+          .transaction(TABLE_NAME, "readwrite")
+          .objectStore(TABLE_NAME)
+          .delete(id);
+        return tx;
+      });
+  };
+  const getNote = (id: NoteType["id"]) => {
+    let result;
+    if (db)
+      result = db.then((db) => {
+        const tx = db
+          .transaction(TABLE_NAME, "readwrite")
+          .objectStore(TABLE_NAME)
+          .get(id);
+        return tx;
+      });
+    return result;
+  };
+  return { writeNote, readAllNotes, deleteNote, getNote, db };
 };
 
 export default useIdb;
